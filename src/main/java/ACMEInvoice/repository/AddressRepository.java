@@ -18,9 +18,9 @@ public interface CustomerRepository extends CrudRepository<Customer, long> {
 @Repository(value = "AddressRepository")
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
-    @Query("FROM ADDRESSES WHERE VALUE LIKE %?1% ")
+    @Query("FROM ADDRESSES WHERE ADDRESS_STRING LIKE %?1% ")
     List<Address> findByAddress(String value);
 
-    @Query("FROM ADDRESSES WHERE CUSTOMER_ID = %?1% ")
+    @Query("FROM ADDRESSES WHERE CUSTOMER_ID = ?1 ")
     List<Address> findByCustomerID(long customerId);
 }

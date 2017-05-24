@@ -3,11 +3,13 @@ package ACMEInvoice.service;
 import ACMEInvoice.domain.Address;
 import ACMEInvoice.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
-@Servicepublic
-class AddressService extends AbstractService<Address, Long> {
+@Service
+public class AddressService extends AbstractService<Address, Long> {
 
     private AddressRepository repository;
 

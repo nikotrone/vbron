@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Servicepublic
-class CustomerService extends AbstractService<Customer, Long> {
+@Service
+public class CustomerService extends AbstractService<Customer, Long> {
 
     private CustomerRepository repository;
 

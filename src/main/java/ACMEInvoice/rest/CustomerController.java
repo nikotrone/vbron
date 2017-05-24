@@ -50,7 +50,7 @@ public class CustomerController extends AbstractController<Customer, Long> {
     }
 
     @RequestMapping(value="findByName/{name}", method = RequestMethod.GET)
-    public List<Customer> findByLastName(@PathVariable String name) {
-        return service.findByName(name);
+    public List<Customer> findByAddress(@PathVariable String name) {
+        return service.findByAddress(name);
     }
 }
