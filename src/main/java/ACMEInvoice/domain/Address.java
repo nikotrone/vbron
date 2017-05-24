@@ -1,58 +1,60 @@
-package ACMEInvoice;
+package ACMEInvoice.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Column;
 import javax.persistence.Id;
 
 
 @Entity
-public class Invoice {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id, customerId, addressId;
-    private float amount;
-    private short month,year;
-    private String type;
+    @Column (name = "id")
+    private long id;
 
-    public Invoice(long id, long customerId, long addressId, float amount, short month, short year, String type) {
+    @Column (name = "value")
+    private String value;
+
+    @Column (name = "customerId")
+    private long customerId;
+
+    public Address(){}
+
+    public Address(long id, String value, long customerId) {
         this.id = id;
-        this.addressId = addressId;
+        this.value = value;
         this.customerId = customerId;
-        this.amount = amount;
-        this.month = month;
-        this.year = year;
-        this.type = type;
-
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Address[id=%d, addressId='%s', customerId='%s']",
-                id, addressId, customerId);
+                "Address[id=%d, value='%s', customerId='%s']",
+                id, value, customerId);
     }
 
     public long getId(){
         return this.id;
     }
 
-    /*public String getValue(){
+    public String getValue(){
         return this.value;
-    }*/
+    }
 
     public long getCustomerId(){
         return this.customerId;
     }
 
     public void setId(long newId){
-        this.id=newId;
+        this.id= newId;
     }
 
-    /*public void setValue(String value){
+    public void setValue(String value){
         this.value= value;
-    }*/
+    }
 
     public void setCustomerId(long customerId){
         this.customerId= customerId;

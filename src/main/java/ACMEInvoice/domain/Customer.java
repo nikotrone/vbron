@@ -1,8 +1,9 @@
-package ACMEInvoice;
+package ACMEInvoice.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Column;
 import javax.persistence.Id;
 
 @Entity
@@ -10,9 +11,17 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column (name = "id")
     private long id;
 
-    private String firstName, lastName;
+    @Column (name = "firstName")
+    private String firstName;
+
+    @Column (name = "lastName")
+    private String lastName;
+
+    // empty constructor
+    public Customer() {}
 
     public Customer(long id, String firstName, String lastName) {
         this.id = id;
@@ -50,5 +59,6 @@ public class Customer {
     public void setLastName(String newName){
         this.lastName= newName;
     }
+
 
 }
