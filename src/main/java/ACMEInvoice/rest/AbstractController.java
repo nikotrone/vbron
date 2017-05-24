@@ -1,5 +1,6 @@
 package ACMEInvoice.rest;
 
+import ACMEInvoice.service.AbstractService;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
