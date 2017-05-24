@@ -49,8 +49,8 @@ public class CustomerController extends AbstractController<Customer, Long> {
         this.service=service;
     }
 
-    @RequestMapping(value="findByName/{name}", method = RequestMethod.GET)
-    public List<Customer> findByAddress(@PathVariable String name) {
-        return service.findByAddress(name);
+    @RequestMapping(value="findByLastName/{name}", method = RequestMethod.GET)
+    public List<Customer> findByLastName(@PathVariable String name) {
+        return service.findByLastName(name);
     }
 }
