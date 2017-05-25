@@ -3,70 +3,23 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-        // draws the proper action form for selected action type
-        function showSelectedActionForm(){
-            var actionType=$("#actionSelect");
-            if(actionType.val() == "view") showViewRequest();
-            else showCreateRequest();
+
+        function initializePage(){
+            showCustomerIdSearch();
         }
 
-        function showViewRequest(){
-            $("#divCreateInvoice").hide();
-            $("#divSearchSelect").show();
-
+        // ----------- Customer ID Search Functions -----------
+        function showCustomerIdSearch(){
+            $("#monthSearch_div").hide();
+            $("#addressSearch_div").hide();
+            $("#newInvoice_div").hide();
+            $("#customerIdSearch_div").show();
         }
 
-        function showCreateRequest(){
-            $("#divSearchSelect").hide();
-            $("#divCreateInvoice").show();
-        }
-
-        function customizePage(){
+        function customerIdSearch(){
             var customerId=$("#customerIdField").val();
-            $("#newInvoiceTargetAddress").empty();
-            $.ajax({
-                type: "GET",
-                method:"GET",
-                url: "address/findByCustomerId/"+customerId,
-                dataType: 'JSON',
-                success: function(response){
-                    for(var index=0; index<response.length; index++){
-                        $("#newInvoiceTargetAddress").append("<option value='"+response[index].id+"'>" +
-                          response[index].address  +"</option>");
-                        $("#viewInvoiceTargetAddress").append("<option value='"+response[index].id+"'>" +
-                            response[index].address  +"</option>");
-                    }
-                },
-                error: function(response){
-                    debugger;
-                    alert("error while fetching data from BE");
-                }
-            });
-        }
-
-        function fetchInvoicesByMonth(){
-            var customerId=$("#customerIdField").val();
-            $("#InvoiceHistoryCanvas").empty();
-            $.ajax({
-                type: "GET",
-                method:"GET",
-                url: "invoice/findByCustomerIdAndMonth/"+customerId,
-                dataType: 'JSON',
-                success: function(response){
-                    for(var index=0; index<response.length; index++){
-                        $("#InvoiceHistoryCanvas").append("<p>" +
-                            response[index] +"</p>");
-                    }
-                },
-                error: function(response){
-                    alert("error while fetching data from BE");
-                }
-            });
-        }
-
-        function fetchInvoicesByCutomerId(){
-            var customerId=$("#customerIdField").val();
-            $("#InvoiceHistoryCanvas").empty();
+            if(customerId==undefined) customerId=1;
+            $("#customerIdSearchResult").empty();
             $.ajax({
                 type: "GET",
                 method:"GET",
@@ -74,20 +27,193 @@
                 dataType: 'JSON',
                 success: function(response){
                     for(var index=0; index<response.length; index++){
-                        $("#InvoiceHistoryCanvas").append("<p>" +
-                            response[index] +"</p>");
+                        $("#customerIdSearchResult").append("<p>" +
+                            JSON.stringify(response[index]) +"</p>");
                     }
                 },
                 error: function(response){
-                    alert("error while fetching data from BE");
+                    debugger;
+                    alert("error while fetching data from BE (fetchInvoicesByCustomerId)");
+                }
+            });
+        }
+        // ----------- END Customer ID Search Functions -----------
+
+
+        // ----------- Monthly Search Functions -----------
+        function showMonthSearch(){
+            $("#viewInvoiceTargetMonth").empty();
+
+            for(var index=1; index <=12 ; index++ ) {
+                $("#viewInvoiceTargetMonth").append("<option value='" + index + "'>" + index + "</option>");
+            }
+
+            $("#addressSearch_div").hide();
+            $("#newInvoice_div").hide();
+            $("#customerIdSearch_div").hide();
+            $("#monthSearch_div").show();
+        }
+
+        function monthSearch(){
+            var customerId=$("#monthCustomerIdField").val();
+            if(customerId==undefined) customerId=1;
+            var selectedMonth = $("#viewInvoiceTargetMonth").val();
+            $("#monthSearchResult").empty();
+            $.ajax({
+                type: "GET",
+                method:"GET",
+                url: "invoice/findByMonth/" + customerId + "&" + selectedMonth,
+                dataType: 'JSON',
+                success: function(response){
+                    for(var index=0; index<response.length; index++){
+                        $("#monthSearchResult").append("<p>" +
+                            JSON.stringify(response[index]) +"</p>");
+                    }
+                },
+                error: function(response){
+                    alert("error while fetching data from BE (fetchInvoicesByMonth)");
+                }
+            });
+        }
+        // ----------- END Monthly Search Functions -----------
+
+
+
+        // ----------- Address Search Functions -----------
+        function showAddressSearch(){
+
+            $("#addressSearch_div").show();
+            $("#newInvoice_div").hide();
+            $("#customerIdSearch_div").hide();
+            $("#monthSearch_div").hide();
+        }
+
+        function addressSearch(){
+            var customerId=$("#addressCustomerIdField").val();
+            if(customerId==undefined) customerId=1;
+            var selectedAddress = $("#viewInvoiceTargetAddress").val();
+            $("#addressSearchResult").empty();
+            $.ajax({
+                type: "GET",
+                method:"GET",
+                url: "invoice/findByAddress/" + customerId + "&" + selectedAddress,
+                dataType: 'JSON',
+                success: function(response){
+                    for(var index=0; index<response.length; index++){
+                        $("#addressSearchResult").append("<p>" +
+                            JSON.stringify(response[index]) +"</p>");
+                    }
+                },
+                error: function(response){
+                    alert("error while fetching data from BE (fetchInvoicesByAddress)");
                 }
             });
         }
 
-        function initializePage(){
-            showViewRequest();
-            fetchInvoicesByCutomerId();
+
+        function customizePage(){
+            var customerId=$("#addressCustomerIdField").val();
+            $("#viewInvoiceTargetAddress").empty();
+            $.ajax({
+                type: "GET",
+                method:"GET",
+                url: "address/findByCustomerId/"+customerId,
+                dataType: 'JSON',
+                success: function(response){
+                    for(var index=0; index<response.length; index++){
+                        $("#viewInvoiceTargetAddress").append("<option value='"+response[index].id+"'>" +
+                            response[index].address  +"</option>");
+                    }
+                },
+                error: function(response){
+                    debugger;
+                    alert("error while fetching data from BE (customizePage)");
+                }
+            });
         }
+        // ----------- END Address Search Functions -----------
+
+
+
+
+        // ----------- New Invoice Functions -----------
+        function showNewInvoiceForm(){
+
+            $("#addressSearch_div").hide();
+            $("#newInvoice_div").show();
+            $("#customerIdSearch_div").hide();
+            $("#monthSearch_div").hide();
+        }
+
+        function createNewInvoice(){
+            var customerId=$("#newInvoiceCustomerIdField").val();
+            if(customerId==undefined) customerId=1;
+            var selectedAddress = $("#newInvoiceTargetAddress").val();
+            var amount = $("#newInvoicePurchaseAmount").val();
+            var month = $("#newInvoicePurchaseMonth").val();
+            var year = $("#newInvoicePurchaseYear").val();
+            var type = $("#newInvoicePurchaseType").val();
+
+            var datatosend={
+                addressId: selectedAddress,
+                customerId: customerId,
+                amount: amount,
+                month: month,
+                year: year,
+                type: type
+            };
+
+            $.ajax({
+                type: "PUT",
+                method:"POST",
+                url: "invoice/",
+                dataType: 'JSON',
+                data: datatosend,
+                success: function(response){
+                    debugger;
+                    for(var index=0; index<response.length; index++){
+                        $("#createInvoiceResult").append("<p>" +
+                            JSON.stringify(response[index]) +"</p>");
+                    }
+                },
+                error: function(response){
+                    debugger;
+                    alert("error while fetching data from BE (fetchInvoicesByAddress)");
+                }
+            });
+        }
+
+
+        function customizeNewInvoicePage(){
+            var customerId=$("#newInvoiceCustomerIdField").val();
+            $("#newInvoiceTargetAddress").empty();
+            $.ajax({
+                type: "GET",
+                method:"GET",
+                url: "address/findByCustomerId/" + customerId,
+                dataType: 'JSON',
+                success: function(response){
+                    for(var index=0; index<response.length; index++){
+                        $("#newInvoiceTargetAddress").append("<option value='" + response[index].id + "'>" +
+                            response[index].address  +"</option>");
+                    }
+                },
+                error: function(response){
+                    debugger;
+                    alert("error while fetching data from BE (customizeNewInvoicePage)");
+                }
+            });
+        }
+        // ----------- END New Invoice Functions -----------
+
+
+
+
+
+
+
+
+
 
     </script>
     <title>Serving Web Content</title>
@@ -99,80 +225,98 @@
 
 <div id="headerContainer" style="width:100%; text-align: center"><h1>Greetings Customer</h1></div>
 
+
+<!-- Action Section -->
+<button onclick="showCustomerIdSearch()">Search Customer ID</button>
+<button onclick="showMonthSearch()">Search Month</button>
+<button onclick="showAddressSearch()">Search Address</button>
+<button onclick="showNewInvoiceForm()">New Invoice</button>
+<!-- End Action Section -->
+
+
 <div id="contentContainer" style="width:100%; text-align: center">
-    <input id="customerIdField" type="text" placeholder="Who the hell are you?" onchange="customizePage()" />
-    <div>
-        <select id="actionSelect" onchange="showSelectedActionForm()">
-            Select the type of action you want to go for
-            <option value="view" selected="selected" >view</option>
-            <option value="create" >creation</option>
+
+    <!-- Customer ID search tab -->
+    <div id="customerIdSearch_div">
+        <input id="customerIdField" type="text" placeholder="Who the hell are you?" />
+        <button onclick="customerIdSearch()">Search Customer ID</button>
+
+        <div id="customerIdSearchResult">
+        </div>
+    </div>
+    <!-- End Customer ID search tab -->
+
+
+
+    <!-- Month search tab -->
+    <div id="monthSearch_div">
+        <input id="monthCustomerIdField" type="text" placeholder="Who the hell are you?" />
+        <select id="viewInvoiceTargetMonth"></select>
+        <button onclick="monthSearch()">Search monthly</button>
+
+        <div id="monthSearchResult">
+        </div>
+    </div>
+    <!-- End monthly search tab -->
+
+
+
+    <!-- Address search tab -->
+    <div id="addressSearch_div">
+        <input id="addressCustomerIdField" type="text" placeholder="Who the hell are you?" onchange="customizePage()"/>
+        <select id="viewInvoiceTargetAddress"></select>
+        <button onclick="addressSearch()">Search Address</button>
+
+        <div id="addressSearchResult">
+        </div>
+    </div>
+    <!-- End Address search tab -->
+
+
+
+    <!-- New Invoice tab -->
+    <div id="newInvoice_div">
+        <input id="newInvoiceCustomerIdField" type="text" placeholder="Who the hell are you?" onchange="customizeNewInvoicePage()"/>
+
+        <select id="newInvoiceTargetAddress">
         </select>
 
+        <input id="newInvoicePurchaseAmount" type="text" placeholder="amount" />
 
+        <select id="newInvoicePurchaseType">
+            <option value="monthly">monthly</option>
+            <option value="shop">shop</option>
+        </select>
 
+        <select id="newInvoicePurchaseMonth">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+        </select>
 
-        <div id="divSearchSelect">
-            <select id="searchSelect">
-                Select the type of search you want to perform
-                <option value="customerId" selected="selected">show all</option>
-                <option value="month">month search</option>
-                <option value="address">address search</option>
-            </select>
-            <select id="viewInvoiceTargetAddress"></select>
-            <select id="viewInvoiceTargetMonth"></select>
+        <select id="newInvoicePurchaseYear">
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+        </select>
 
-            <div id="InvoiceHistoryCanvas">
+        <button onclick="createNewInvoice()">Create new invoice</button>
 
-            </div>
+        <div id="createInvoiceResult">
         </div>
-
-
-
-
-        <div id="divCreateInvoice">
-            <form id="invoiceCreationRequest">
-                <input id="customerId" type="hidden" />
-
-                <select id="newInvoiceTargetAddress">
-                </select>
-
-                <input id="purchaseAmount" type="text" placeholder="amount" />
-
-                <select id="purchaseType">
-                    <option value="monthly">monthly</option>
-                    <option value="shop">shop</option>
-                </select>
-
-                <select id="purchaseMonth">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>
-
-                <select id="purchaseYear">
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                    <option value="2017">2017</option>
-                </select>
-                <button onclick="createNewInvoice()">Create</button>
-            </form>
-        </div>
-
-
-
-
-
-
     </div>
+    <!-- End new invoice tab -->
+
+
 </div>
 <div id="footerContainer">
     database Console <a href="/console">here</a>

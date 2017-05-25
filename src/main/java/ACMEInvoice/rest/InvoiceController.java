@@ -21,7 +21,7 @@ public class InvoiceController extends AbstractController<Invoice, Long> {
         this.service=service;
     }
 
-    @RequestMapping(value="findByAddress/{name}", method = RequestMethod.GET)
+    @RequestMapping(value="findByAddress/{customerId}&{addressId}", method = RequestMethod.GET)
     public List<Invoice> findByCustomerIdAndAddressId(@PathVariable long customerId, @PathVariable long addressId) {
         return service.findByCustomerIdAndAddressId(customerId, addressId);
     }
@@ -31,13 +31,15 @@ public class InvoiceController extends AbstractController<Invoice, Long> {
         return service.findByCustomerId(customerId);
     }
 
-    @RequestMapping(value="findByMonth/{month}", method = RequestMethod.GET)
+    @RequestMapping(value="findByMonth/{customerId}&{month}", method = RequestMethod.GET)
     public List<Invoice> findByCustomerIdAndMonth(@PathVariable long customerId, @PathVariable short month) {
         return service.findByCustomerIdAndMonth(customerId, month);
     }
 
-    @RequestMapping(value="findByMonthAndType/{type}", method = RequestMethod.GET)
+    @RequestMapping(value="findByMonthAndType/{customerId}&{month}&{type}", method = RequestMethod.GET)
     public List<Invoice> findByCustomerIdAndMonthAndType(@PathVariable long customerId, @PathVariable short month, @PathVariable String type) {
         return service.findByCustomerIdAndMonthAndType(customerId, month, type);
     }
+
+    
 }
