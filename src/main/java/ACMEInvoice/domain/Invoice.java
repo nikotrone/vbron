@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 
-@Entity
+@Entity (name="CUSTOMER")
 public class Invoice {
 
     @Id
@@ -80,6 +80,9 @@ public class Invoice {
         return this.year;
     }
 
+    public void setId(long newId){
+        this.id=newId;
+    }
 
     public void setAddressId(long newAddressId){
         this.addressId= newAddressId;

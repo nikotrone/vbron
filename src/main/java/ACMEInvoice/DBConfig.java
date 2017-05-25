@@ -1,6 +1,7 @@
 package ACMEInvoice;
 
-import org.hibernate.ejb.HibernatePersistence;
+//import org.hibernate.ejb.HibernatePersistence;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,18 +17,18 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-@Configuration@EnableTransactionManagement@ComponentScan("ACMEInvoice")
+@Configuration @EnableTransactionManagement @ComponentScan("ACMEInvoice")
 @PropertySource("classpath:application.properties")
 @EnableJpaRepositories("ACMEInvoice.repository")
 public class DBConfig {
-    private static final String PROP_DATABASE_DRIVER = "db.driver";
-    private static final String PROP_DATABASE_PASSWORD = "db.password";
-    private static final String PROP_DATABASE_URL = "db.url";
-    private static final String PROP_DATABASE_USERNAME = "db.username";
-    private static final String PROP_HIBERNATE_DIALECT = "db.hibernate.dialect";
-    private static final String PROP_HIBERNATE_SHOW_SQL = "db.hibernate.show_sql";
-    private static final String PROP_ENTITYMANAGER_PACKAGES_TO_SCAN = "db.entitymanager.packages.to.scan";
-    private static final String PROP_HIBERNATE_HBM2DDL_AUTO = "db.hibernate.hbm2ddl.auto";
+    private static final String PROP_DATABASE_DRIVER = "org.h2.Driver";
+    private static final String PROP_DATABASE_PASSWORD = "";
+    private static final String PROP_DATABASE_URL = "jdbc:h2:~/test";
+    private static final String PROP_DATABASE_USERNAME = "sa";
+    private static final String PROP_HIBERNATE_DIALECT = "org.hibernate.dialect.H2Dialect";
+    private static final String PROP_HIBERNATE_SHOW_SQL = "false";
+    private static final String PROP_ENTITYMANAGER_PACKAGES_TO_SCAN = "ACMEInvoice.domain";
+    private static final String PROP_HIBERNATE_HBM2DDL_AUTO = "create";
 
     @Resource
     private Environment env;
@@ -36,10 +37,10 @@ public class DBConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName(env.getRequiredProperty(PROP_DATABASE_DRIVER));
-        dataSource.setUrl(env.getRequiredProperty(PROP_DATABASE_URL));
-        dataSource.setUsername(env.getRequiredProperty(PROP_DATABASE_USERNAME));
-        dataSource.setPassword(env.getRequiredProperty(PROP_DATABASE_PASSWORD));
+        dataSource.setDriverClassName((PROP_DATABASE_DRIVER));
+        dataSource.setUrl((PROP_DATABASE_URL));
+        dataSource.setUsername((PROP_DATABASE_USERNAME));
+        dataSource.setPassword((PROP_DATABASE_PASSWORD));
 
         return dataSource;
     }
@@ -48,8 +49,8 @@ public class DBConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
-        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistence.class);
-        entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty(PROP_ENTITYMANAGER_PACKAGES_TO_SCAN));
+        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+        entityManagerFactoryBean.setPackagesToScan((PROP_ENTITYMANAGER_PACKAGES_TO_SCAN));
 
         entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
 
@@ -66,9 +67,9 @@ public class DBConfig {
 
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", env.getRequiredProperty(PROP_HIBERNATE_DIALECT));
-        properties.put("hibernate.show_sql", env.getRequiredProperty(PROP_HIBERNATE_SHOW_SQL));
-        properties.put("hibernate.hbm2ddl.auto", env.getRequiredProperty(PROP_HIBERNATE_HBM2DDL_AUTO));
+        properties.put("hibernate.dialect", (PROP_HIBERNATE_DIALECT));
+        properties.put("hibernate.show_sql", (PROP_HIBERNATE_SHOW_SQL));
+        properties.put("hibernate.hbm2ddl.auto", (PROP_HIBERNATE_HBM2DDL_AUTO));
 
         return properties;
     }
