@@ -6,6 +6,7 @@ ACMEInvoice/service/InvoiceService.class
 ACMEInvoice/Application.class
 ACMEInvoice/rest/AddressController.class
 ACMEInvoice/repository/CustomerRepository.class
+ACMEInvoice/WebController.class
 ACMEInvoice/service/CustomerService.class
 ACMEInvoice/service/AbstractService.class
 ACMEInvoice/GreetingController.class

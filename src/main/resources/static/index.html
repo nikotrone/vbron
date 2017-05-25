@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div id="headerContainer" style="width:100%; text-align: center"><h1>Greeting Customer</h1></div>
+<div id="contentContainer" style="width:100%; text-align: center">
+    <input id="customerIdField" type="text" placeholder="Who the hell are you?">
+    <div>
+        <select id="actionSelect">
+            Select the type of action you want to go for
+            <option value="view" selected="selected">view</option>
+            <option value="create">creation</option>
+        </select>
+
+        <select id="searchSelect">
+            Select the type of search you want to perform
+            <option value="customerId" selected="selected">show all</option>
+            <option value="month">month search</option>
+            <option value="address">address search</option>
+        </select>
+
+    </div>
+</div>
+</body>
+</html>
