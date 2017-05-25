@@ -20,20 +20,18 @@ public class InvoiceService extends AbstractService<Invoice, Long> {
         this.repository=repository;
     }
 
-    public List<Invoice> findByCustomerID(long id) {
-        return repository.findByCustomerID(id);
+    public List<Invoice> findByCustomerId(long id) {
+        return repository.findByCustomerId(id);
     }
-    public List<Invoice> findByAddressID(long customerId, long addressId) {
-        return repository.findByAddressID(customerId, addressId);
+    public List<Invoice> findByCustomerIdAndAddressId(long customerId, long addressId) {
+        return repository.findByCustomerIdAndAddressId(customerId, addressId);
     }
-    /*public List<Invoice> findByAddressID(long id) {
-        return repository.findByAddressID(id);
-    }*/
-    public List<Invoice> findByMonth(long id, short month) {
-        return repository.findByMonth(id, month);
+
+    public List<Invoice> findByCustomerIdAndMonth(long id, short month) {
+        return repository.findByCustomerIdAndMonth(id, month);
     }
-    public List<Invoice> findByMonthAndType(long id, short month, String type) {
-        return repository.findByMonthAndType(id, month,type);
+    public List<Invoice> findByCustomerIdAndMonthAndType(long id, short month, String type) {
+        return repository.findByCustomerIdAndMonthAndType(id, month,type);
     }
 
 }

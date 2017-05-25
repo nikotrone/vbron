@@ -22,22 +22,22 @@ public class InvoiceController extends AbstractController<Invoice, Long> {
     }
 
     @RequestMapping(value="findByAddress/{name}", method = RequestMethod.GET)
-    public List<Invoice> findByAddressID(@PathVariable long customerId, @PathVariable long addressId) {
-        return service.findByAddressID(customerId, addressId);
+    public List<Invoice> findByCustomerIdAndAddressId(@PathVariable long customerId, @PathVariable long addressId) {
+        return service.findByCustomerIdAndAddressId(customerId, addressId);
     }
 
     @RequestMapping(value="findByCustomerId/{customerId}", method = RequestMethod.GET)
-    public List<Invoice> findByCustomerID(@PathVariable long customerId) {
-        return service.findByCustomerID(customerId);
+    public List<Invoice> findByCustomerId(@PathVariable long customerId) {
+        return service.findByCustomerId(customerId);
     }
 
     @RequestMapping(value="findByMonth/{month}", method = RequestMethod.GET)
-    public List<Invoice> findByMonth(@PathVariable long customerId, @PathVariable short month) {
-        return service.findByMonth(customerId, month);
+    public List<Invoice> findByCustomerIdAndMonth(@PathVariable long customerId, @PathVariable short month) {
+        return service.findByCustomerIdAndMonth(customerId, month);
     }
 
     @RequestMapping(value="findByMonthAndType/{type}", method = RequestMethod.GET)
-    public List<Invoice> findByMonthAndType(@PathVariable long customerId, @PathVariable short month, @PathVariable String type) {
-        return service.findByMonthAndType(customerId, month, type);
+    public List<Invoice> findByCustomerIdAndMonthAndType(@PathVariable long customerId, @PathVariable short month, @PathVariable String type) {
+        return service.findByCustomerIdAndMonthAndType(customerId, month, type);
     }
 }

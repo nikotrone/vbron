@@ -18,6 +18,6 @@ public interface CustomerRepository extends CrudRepository<Customer, long> {
 @Repository(value = "CustomerRepository")
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    @Query("FROM CUSTOMERS WHERE LAST_NAME LIKE %?1% ")
-    List<Customer> findByLastName(String name);
+    //@Query("FROM CUSTOMERS WHERE LAST_NAME LIKE %?1% ")
+    List<Customer> findByLastName(String lastName);
 }

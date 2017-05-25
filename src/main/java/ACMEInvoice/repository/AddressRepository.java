@@ -11,9 +11,9 @@ import java.util.List;
 @Repository(value = "AddressRepository")
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
-    @Query("FROM ADDRESSES WHERE ADDRESS_STRING LIKE %?1% ")
-    List<Address> findByAddress(String value);
+    //@Query("SELECT * FROM ADDRESSES WHERE ADDRESS_STRING LIKE %?1% ")
+    List<Address> findByAddress(String address);
 
-    @Query("FROM ADDRESSES WHERE CUSTOMER_ID = ?1 ")
-    List<Address> findByCustomerID(long customerId);
+    //@Query("SELECT * FROM ADDRESSES WHERE CUSTOMER_ID = ?1 ")
+    List<Address> findByCustomerId(long customerId);
 }

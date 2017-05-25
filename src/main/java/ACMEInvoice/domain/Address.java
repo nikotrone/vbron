@@ -15,17 +15,17 @@ public class Address {
     @Column (name = "id")
     private long id;
 
-    @Column (name = "value")
-    private String value;
+    @Column (name = "address")
+    private String address;
 
     @Column (name = "customerId")
     private long customerId;
 
     public Address(){}
 
-    public Address(long id, String value, long customerId) {
+    public Address(long id, String address, long customerId) {
         this.id = id;
-        this.value = value;
+        this.address = address;
         this.customerId = customerId;
     }
 
@@ -33,15 +33,15 @@ public class Address {
     public String toString() {
         return String.format(
                 "Address[id=%d, value='%s', customerId='%s']",
-                id, value, customerId);
+                id, address, customerId);
     }
 
     public long getId(){
         return this.id;
     }
 
-    public String getValue(){
-        return this.value;
+    public String getAddress(){
+        return this.address;
     }
 
     public long getCustomerId(){
@@ -52,8 +52,8 @@ public class Address {
         this.id= newId;
     }
 
-    public void setValue(String value){
-        this.value= value;
+    public void setAddress(String address){
+        this.address= address;
     }
 
     public void setCustomerId(long customerId){

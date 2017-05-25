@@ -25,6 +25,6 @@ public class AddressService extends AbstractService<Address, Long> {
     }
 
     public List<Address> findByCustomerId(long id) {
-        return repository.findByCustomerID(id);
+        return repository.findByCustomerId(id);
     }
 }
