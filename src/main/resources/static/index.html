@@ -2,28 +2,180 @@
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        // draws the proper action form for selected action type
+        function showSelectedActionForm(){
+            var actionType=$("#actionSelect");
+            if(actionType.val() == "view") showViewRequest();
+            else showCreateRequest();
+        }
+
+        function showViewRequest(){
+            $("#divCreateInvoice").hide();
+            $("#divSearchSelect").show();
+
+        }
+
+        function showCreateRequest(){
+            $("#divSearchSelect").hide();
+            $("#divCreateInvoice").show();
+        }
+
+        function customizePage(){
+            var customerId=$("#customerIdField").val();
+            $("#newInvoiceTargetAddress").empty();
+            $.ajax({
+                type: "GET",
+                method:"GET",
+                url: "address/findByCustomerId/"+customerId,
+                dataType: 'JSON',
+                success: function(response){
+                    for(var index=0; index<response.length; index++){
+                        $("#newInvoiceTargetAddress").append("<option value='"+response[index].id+"'>" +
+                          response[index].address  +"</option>");
+                        $("#viewInvoiceTargetAddress").append("<option value='"+response[index].id+"'>" +
+                            response[index].address  +"</option>");
+                    }
+                },
+                error: function(response){
+                    debugger;
+                    alert("error while fetching data from BE");
+                }
+            });
+        }
+
+        function fetchInvoicesByMonth(){
+            var customerId=$("#customerIdField").val();
+            $("#InvoiceHistoryCanvas").empty();
+            $.ajax({
+                type: "GET",
+                method:"GET",
+                url: "invoice/findByCustomerIdAndMonth/"+customerId,
+                dataType: 'JSON',
+                success: function(response){
+                    for(var index=0; index<response.length; index++){
+                        $("#InvoiceHistoryCanvas").append("<p>" +
+                            response[index] +"</p>");
+                    }
+                },
+                error: function(response){
+                    alert("error while fetching data from BE");
+                }
+            });
+        }
+
+        function fetchInvoicesByCutomerId(){
+            var customerId=$("#customerIdField").val();
+            $("#InvoiceHistoryCanvas").empty();
+            $.ajax({
+                type: "GET",
+                method:"GET",
+                url: "invoice/findByCustomerId/"+customerId,
+                dataType: 'JSON',
+                success: function(response){
+                    for(var index=0; index<response.length; index++){
+                        $("#InvoiceHistoryCanvas").append("<p>" +
+                            response[index] +"</p>");
+                    }
+                },
+                error: function(response){
+                    alert("error while fetching data from BE");
+                }
+            });
+        }
+
+        function initializePage(){
+            showViewRequest();
+            fetchInvoicesByCutomerId();
+        }
+
+    </script>
     <title>Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<body>
-<div id="headerContainer" style="width:100%; text-align: center"><h1>Greeting Customer</h1></div>
+
+
+<body onload="initializePage()">
+
+<div id="headerContainer" style="width:100%; text-align: center"><h1>Greetings Customer</h1></div>
+
 <div id="contentContainer" style="width:100%; text-align: center">
-    <input id="customerIdField" type="text" placeholder="Who the hell are you?">
+    <input id="customerIdField" type="text" placeholder="Who the hell are you?" onchange="customizePage()" />
     <div>
-        <select id="actionSelect">
+        <select id="actionSelect" onchange="showSelectedActionForm()">
             Select the type of action you want to go for
-            <option value="view" selected="selected">view</option>
-            <option value="create">creation</option>
+            <option value="view" selected="selected" >view</option>
+            <option value="create" >creation</option>
         </select>
 
-        <select id="searchSelect">
-            Select the type of search you want to perform
-            <option value="customerId" selected="selected">show all</option>
-            <option value="month">month search</option>
-            <option value="address">address search</option>
-        </select>
+
+
+
+        <div id="divSearchSelect">
+            <select id="searchSelect">
+                Select the type of search you want to perform
+                <option value="customerId" selected="selected">show all</option>
+                <option value="month">month search</option>
+                <option value="address">address search</option>
+            </select>
+            <select id="viewInvoiceTargetAddress"></select>
+            <select id="viewInvoiceTargetMonth"></select>
+
+            <div id="InvoiceHistoryCanvas">
+
+            </div>
+        </div>
+
+
+
+
+        <div id="divCreateInvoice">
+            <form id="invoiceCreationRequest">
+                <input id="customerId" type="hidden" />
+
+                <select id="newInvoiceTargetAddress">
+                </select>
+
+                <input id="purchaseAmount" type="text" placeholder="amount" />
+
+                <select id="purchaseType">
+                    <option value="monthly">monthly</option>
+                    <option value="shop">shop</option>
+                </select>
+
+                <select id="purchaseMonth">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+
+                <select id="purchaseYear">
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                </select>
+                <button onclick="createNewInvoice()">Create</button>
+            </form>
+        </div>
+
+
+
+
+
 
     </div>
+</div>
+<div id="footerContainer">
+    database Console <a href="/console">here</a>
 </div>
 </body>
 </html>

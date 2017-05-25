@@ -4,6 +4,7 @@
 /home/nikotrone/IdeaProjects/vbron/src/main/java/ACMEInvoice/domain/Customer.java
 /home/nikotrone/IdeaProjects/vbron/src/main/java/ACMEInvoice/GreetingController.java
 /home/nikotrone/IdeaProjects/vbron/src/main/java/ACMEInvoice/rest/CustomerController.java
+/home/nikotrone/IdeaProjects/vbron/src/main/java/ACMEInvoice/WebController.java
 /home/nikotrone/IdeaProjects/vbron/src/main/java/ACMEInvoice/service/InvoiceService.java
 /home/nikotrone/IdeaProjects/vbron/src/main/java/ACMEInvoice/service/AddressService.java
 /home/nikotrone/IdeaProjects/vbron/src/main/java/ACMEInvoice/service/AbstractService.java
