@@ -41,5 +41,5 @@ public class InvoiceController extends AbstractController<Invoice, Long> {
         return service.findByCustomerIdAndMonthAndType(customerId, month, type);
     }
 
-    
+
 }
