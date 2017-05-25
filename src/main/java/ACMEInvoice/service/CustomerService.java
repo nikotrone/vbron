@@ -23,4 +23,8 @@ public class CustomerService extends AbstractService<Customer, Long> {
     public List<Customer> findByLastName(String name) {
         return repository.findByLastName(name);
     }
+
+    public List<Customer> findById(long id) {
+        return repository.findById(id);
+    }
 }

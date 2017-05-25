@@ -53,4 +53,9 @@ public class CustomerController extends AbstractController<Customer, Long> {
     public List<Customer> findByLastName(@PathVariable String name) {
         return service.findByLastName(name);
     }
+
+    @RequestMapping(value="findById/{id}", method = RequestMethod.GET)
+    public List<Customer> findByCustomerId(@PathVariable long id) {
+        return service.findById(id);
+    }
 }

@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 
-@Entity (name="CUSTOMER")
+@Entity (name="INVOICE")
 public class Invoice {
 
     @Id
