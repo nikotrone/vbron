@@ -32,14 +32,17 @@ public class InvoiceController extends AbstractController<Invoice, Long> {
     }
 
     @RequestMapping(value="findByMonth/{customerId}&{month}", method = RequestMethod.GET)
-    public List<Invoice> findByCustomerIdAndMonth(@PathVariable long customerId, @PathVariable short month) {
+    public List<Invoice> findByCustomerIdAndMonth(@PathVariable long customerId, @PathVariable int month) {
         return service.findByCustomerIdAndMonth(customerId, month);
     }
 
     @RequestMapping(value="findByMonthAndType/{customerId}&{month}&{type}", method = RequestMethod.GET)
-    public List<Invoice> findByCustomerIdAndMonthAndType(@PathVariable long customerId, @PathVariable short month, @PathVariable String type) {
+    public List<Invoice> findByCustomerIdAndMonthAndType(@PathVariable long customerId, @PathVariable int month, @PathVariable String type) {
         return service.findByCustomerIdAndMonthAndType(customerId, month, type);
     }
 
-
+    @RequestMapping(method = RequestMethod.POST)
+    public void save(){
+        service.saveNew(5,1,1,112,12,2015,"shop");
+    }
 }

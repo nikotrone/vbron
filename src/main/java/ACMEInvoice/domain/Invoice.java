@@ -25,17 +25,17 @@ public class Invoice {
     private float amount;
 
     @Column (name = "month")
-    private short month;
+    private int month;
 
     @Column (name = "year")
-    private short year;
+    private int year;
 
     @Column (name = "type")
     private String type;
 
     public Invoice(){}
 
-    public Invoice(long id, long customerId, long addressId, float amount, short month, short year, String type) {
+    public Invoice(long id, long customerId, long addressId, float amount, int month, int year, String type) {
         this.id = id;
         this.addressId = addressId;
         this.customerId = customerId;
@@ -72,11 +72,11 @@ public class Invoice {
         return this.type;
     }
 
-    public short getMonth(){
+    public int getMonth(){
         return this.month;
     }
 
-    public short getYear(){
+    public int getYear(){
         return this.year;
     }
 
@@ -100,11 +100,11 @@ public class Invoice {
         this.type= newType;
     }
 
-    public void setMonth(short newMonth){
+    public void setMonth(int newMonth){
         this.month= newMonth;
     }
 
-    public void setAddressId(short newYear){
+    public void setYear(int newYear){
         this.year= newYear;
     }
 

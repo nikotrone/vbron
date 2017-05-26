@@ -18,10 +18,10 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
     List<Invoice> findByCustomerIdAndAddressId(long customerId,long addressId);
 
     //@Query("FROM INVOICE WHERE CUSTOMER_ID = ?1 AND MONTH = ?2 ")
-    List<Invoice> findByCustomerIdAndMonth(long customerId, short month);
+    List<Invoice> findByCustomerIdAndMonth(long customerId, int month);
 
     //@Query("FROM INVOICE WHERE CUSTOMER_ID = ?1 AND MONTH = ?2 AND PURCHASE_TYPE= ?3 ")
-    List<Invoice> findByCustomerIdAndMonthAndType(long customerId, short month, String type);
+    List<Invoice> findByCustomerIdAndMonthAndType(long customerId, int month, String type);
 
     // save method should be inherited by JpaRepository
 }
