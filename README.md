@@ -1,6 +1,5 @@
-# vbron
+# vbron [![BCH compliance](https://bettercodehub.com/edge/badge/nikotrone/vbron?branch=master)](https://bettercodehub.com/)
 ACME invoicing system
-[![BCH compliance](https://bettercodehub.com/edge/badge/nikotrone/vbron?branch=master)](https://bettercodehub.com/)
 
 1. System model
 2. Dependancies
